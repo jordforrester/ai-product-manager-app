@@ -1,0 +1,63 @@
+<div class="min-h-screen bg-gradient-to-r from-cyan-500 to-blue-500 py-6 flex flex-col justify-center sm:py-12">
+  <div class="relative py-3 sm:max-w-xl sm:mx-auto w-full">
+    <div class="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
+    <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+      <div class="max-w-md mx-auto">
+        <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">Generating PRD</h2>
+        <p class="text-center text-gray-600 mb-6">Please wait while we generate your PRD. This may take a few minutes.</p>
+        <div class="w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700">
+          <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div>
+        </div>
+        <p id="progress-text" class="text-center text-gray-600">0%</p>
+        <p id="error-message" class="text-center text-red-600 mt-4"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const progressBar = document.getElementById('progress-bar');
+  const progressText = document.getElementById('progress-text');
+  let progress = 0;
+
+  function updateProgress() {
+    if (progress < 90) {
+      progress += 10;
+      progressBar.style.width = `${progress}%`;
+      progressText.textContent = `${progress}%`;
+      setTimeout(updateProgress, 10000); // Update every 10 seconds
+    }
+  }
+
+  function checkStatus() {
+    fetch('<%= check_status_product_idea_prd_path(@product_idea, @prd) %>')
+      .then(response => response.json())
+      .then(data => {
+        console.log('Status check response:', data);
+        if (data.status === 'completed') {
+          console.log('PRD completed, redirecting to:', data.url);
+          progressBar.style.width = '100%';
+          progressText.textContent = '100%';
+          setTimeout(() => { window.location.href = data.url; }, 1000);
+        } else if (data.status === 'failed') {
+          console.error('PRD generation failed:', data.error);
+          progressBar.style.width = '100%';
+          progressBar.classList.remove('bg-blue-600');
+          progressBar.classList.add('bg-red-600');
+          progressText.textContent = 'Generation failed. Please try again.';
+          document.getElementById('error-message').textContent = data.error;
+        } else {
+          console.log('PRD still generating, current status:', data.status);
+          setTimeout(checkStatus, 5000); // Check every 5 seconds
+        }
+      })
+      .catch(error => {
+        console.error('Error checking status:', error);
+      });
+  }
+
+  updateProgress();
+  checkStatus();
+});
+</script>

@@ -1,0 +1,2 @@
+module ProductIdeasHelper
+end

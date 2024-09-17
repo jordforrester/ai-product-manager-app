@@ -1,0 +1,51 @@
+<div class="min-h-screen bg-gradient-to-r from-cyan-500 to-blue-500 py-6 flex flex-col justify-center sm:py-12">
+  <div class="relative py-3 sm:max-w-xl sm:mx-auto w-full">
+    <div class="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
+    <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+      <div class="max-w-md mx-auto">
+        <div>
+          <h1 class="text-2xl font-semibold text-center text-gray-900">Welcome to Your Dashboard</h1>
+          <p class="mt-2 text-center text-gray-600">Here's an overview of your AI Product Manager</p>
+        </div>
+        
+        <div class="mt-8 space-y-6">
+          <div class="bg-gray-50 rounded-lg shadow p-6">
+            <h2 class="text-xl font-medium text-gray-900">Quick Stats</h2>
+            <div class="mt-4 grid grid-cols-2 gap-4">
+              <div class="bg-white p-4 rounded-lg shadow">
+                <p class="text-sm font-medium text-gray-500">Total Ideas</p>
+                <p class="mt-2 text-3xl font-semibold text-indigo-600"><%= ProductIdea.count %></p>
+              </div>
+              <div class="bg-white p-4 rounded-lg shadow">
+                <p class="text-sm font-medium text-gray-500">In Progress</p>
+                <p class="mt-2 text-3xl font-semibold text-yellow-600"><%= ProductIdea.where(status: 'In Progress').count %></p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-gray-50 rounded-lg shadow p-6">
+            <h2 class="text-xl font-medium text-gray-900">Recent Ideas</h2>
+            <ul class="mt-4 space-y-4">
+              <% ProductIdea.order(created_at: :desc).limit(3).each do |idea| %>
+                <li class="bg-white p-4 rounded-lg shadow">
+                  <h3 class="text-lg font-medium text-gray-900"><%= idea.title %></h3>
+                  <p class="mt-1 text-sm text-gray-500"><%= truncate(idea.description, length: 100) %></p>
+                  <div class="mt-2 flex justify-between items-center">
+                    <span class="px-2 py-1 text-xs font-semibold rounded-full <%= status_color(idea.status) %>">
+                      <%= idea.status %>
+                    </span>
+                    <%= link_to "View", idea, class: "text-sm text-indigo-600 hover:text-indigo-900" %>
+                  </div>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+          
+          <div class="flex justify-center">
+            <%= link_to "View All Ideas", product_ideas_path, class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

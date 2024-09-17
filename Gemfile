@@ -19,6 +19,25 @@ gem "jbuilder"
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
+
+
+#using devise for authentication
+gem 'devise'
+
+#for AI features
+gem 'ruby-openai'
+
+#for loading jobs and state
+gem 'sidekiq'
+gem 'redis', '~> 4.8'
+
+
+#to help with ostruct warning
+gem 'ostruct'
+
+#to help with the secret key for OpenAI key
+gem 'dotenv-rails', groups: [:development, :test]
+
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 
@@ -27,6 +46,10 @@ gem "jbuilder"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
+
+#for the UI
+#gem 'webpacker', '~> 5.0'
+gem 'tailwindcss-rails'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false

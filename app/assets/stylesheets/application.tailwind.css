@@ -1,0 +1,44 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* Add custom styles here */
+.prose h1 {
+  @apply text-2xl font-bold mt-6 mb-4;
+}
+
+.prose h2 {
+  @apply text-xl font-semibold mt-5 mb-3;
+}
+
+.prose h3 {
+  @apply text-lg font-medium mt-4 mb-2;
+}
+
+.prose p {
+  @apply my-2;
+}
+
+.prose ul, .prose ol {
+  @apply my-2 pl-5;
+}
+
+.prose li {
+  @apply my-1;
+}
+
+@media (max-width: 640px) {
+  .max-w-4xl {
+    @apply px-4;
+  }
+  
+  .prose {
+    @apply text-sm;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .max-w-4xl {
+    @apply px-6;
+  }
+}
