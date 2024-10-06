@@ -29,7 +29,7 @@ gem 'ruby-openai'
 
 #for loading jobs and state
 gem 'sidekiq'
-gem 'redis', '~> 4.8'
+gem 'redis', '~> 5.3'
 
 
 #to help with ostruct warning
