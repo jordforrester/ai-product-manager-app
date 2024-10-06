@@ -13,3 +13,57 @@
  *= require_tree .
  *= require_self
  */
+
+ @keyframes notification-bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  .transform-bounce {
+    animation: notification-bounce 0.5s ease-in-out;
+  }
+  
+  .notification {
+    z-index: 9999; /* Ensure it's above other elements */
+  }
+
+  .notification {
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+  }
+  
+  .notification.translate-y-0 {
+    transform: translateY(0);
+  }
+  
+  .notification.translate-y-full {
+    transform: translateY(100%);
+  }
+  
+  .notification.opacity-0 {
+    opacity: 0;
+  }
+  
+  .notification.opacity-100 {
+    opacity: 1;
+  }
+
+  .notification {
+    max-width: 300px;
+    animation: fadeIn 0.5s, fadeOut 0.5s 4.5s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-20px); }
+  }

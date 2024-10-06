@@ -1,0 +1,67 @@
+<div class="min-h-screen bg-gradient-to-r from-cyan-500 to-blue-500 py-6 flex flex-col justify-center sm:py-12">
+  <div class="relative py-3 sm:max-w-xl sm:mx-auto w-full">
+    <div class="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
+    <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+      <div class="max-w-md mx-auto">
+        <h1 class="text-2xl font-semibold mb-6 text-center text-gray-900">Edit Your Profile</h1>
+        
+        <%= form_for @user, url: profile_path, method: :patch, html: { multipart: true, class: "space-y-6" } do |f| %>
+          <div>
+            <h2 class="text-lg font-medium text-gray-900 mb-2">Personal Information</h2>
+            <div class="space-y-4">
+              <div>
+                <%= f.label :name, class: "block text-sm font-medium text-gray-700" %>
+                <%= f.text_field :name, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-500 focus:ring focus:ring-cyan-500 focus:ring-opacity-50" %>
+              </div>
+              <div>
+                <%= f.label :email, class: "block text-sm font-medium text-gray-700" %>
+                <%= f.email_field :email, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-500 focus:ring focus:ring-cyan-500 focus:ring-opacity-50" %>
+              </div>
+              <div>
+                <%= f.label :company, class: "block text-sm font-medium text-gray-700" %>
+                <%= f.text_field :company, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-500 focus:ring focus:ring-cyan-500 focus:ring-opacity-50" %>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h2 class="text-lg font-medium text-gray-900 mb-2">Product Domain</h2>
+            <%= f.fields_for :product_domain do |pd| %>
+              <div class="space-y-4">
+                <div>
+                  <%= pd.label :name, class: "block text-sm font-medium text-gray-700" %>
+                  <%= pd.text_field :name, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-500 focus:ring focus:ring-cyan-500 focus:ring-opacity-50" %>
+                </div>
+                <div>
+                  <%= pd.label :description, class: "block text-sm font-medium text-gray-700" %>
+                  <%= pd.text_area :description, rows: 3, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-500 focus:ring focus:ring-cyan-500 focus:ring-opacity-50" %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+
+          <div>
+            <h2 class="text-lg font-medium text-gray-900 mb-2">Product Documents</h2>
+            <div>
+              <%= f.label :product_documents, class: "block text-sm font-medium text-gray-700" %>
+              <%= f.file_field :product_documents, multiple: true, class: "mt-1 block w-full text-sm text-gray-500
+                file:mr-4 file:py-2 file:px-4
+                file:rounded-full file:border-0
+                file:text-sm file:font-semibold
+                file:bg-cyan-50 file:text-cyan-700
+                hover:file:bg-cyan-100" %>
+            </div>
+          </div>
+
+          <div class="flex justify-center">
+            <%= f.submit 'Update Profile', class: 'inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500' %>
+          </div>
+        <% end %>
+
+        <div class="mt-6 flex justify-center">
+          <%= link_to 'Back to Profile', profile_path, class: 'text-sm text-cyan-600 hover:text-cyan-800' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

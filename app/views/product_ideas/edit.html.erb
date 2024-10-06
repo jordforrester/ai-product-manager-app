@@ -24,7 +24,22 @@
 
           <div>
             <%= form.label :description, class: "block text-sm font-medium text-gray-700" %>
-            <%= form.text_area :description, rows: 4, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" %>
+            <%= form.text_area :description, rows: 3, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" %>
+          </div>
+
+          <div>
+            <%= form.label :customer_acv, "Customer ACV ($)", class: "block text-sm font-medium text-gray-700" %>
+            <%= form.number_field :customer_acv, step: 0.01, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" %>
+          </div>
+
+          <div>
+            <%= form.label :customer_impact, class: "block text-sm font-medium text-gray-700" %>
+            <%= form.text_field :customer_impact, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" %>
+          </div>
+
+          <div>
+            <%= form.label :tshirt_size_effort, "T-Shirt Size Effort", class: "block text-sm font-medium text-gray-700" %>
+            <%= form.select :tshirt_size_effort, ['XS', 'S', 'M', 'L', 'XL', 'XXL'], { include_blank: true }, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" %>
           </div>
 
           <div>

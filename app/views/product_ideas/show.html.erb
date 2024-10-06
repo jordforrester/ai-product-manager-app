@@ -1,48 +1,77 @@
 <div class="min-h-screen bg-gradient-to-r from-cyan-500 to-blue-500 py-6 px-4 sm:px-6 lg:px-8">
   <div class="max-w-4xl mx-auto">
-    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-      <div class="px-4 py-5 sm:px-6 bg-gradient-to-r from-cyan-600 to-blue-600">
-        <h1 class="text-2xl font-bold text-white"><%= @product_idea.title %></h1>
+    <div class="bg-gradient-to-br from-yellow-100 to-orange-100 shadow-lg rounded-lg overflow-hidden">
+      <div class="px-4 py-5 sm:px-6 bg-gradient-to-r from-yellow-400 to-orange-500">
+        <h1 class="text-2xl font-bold text-white">Product Idea: <%= @product_idea.title %></h1>
       </div>
       
       <div class="px-4 py-5 sm:p-6">
-        <div class="mb-6">
-          <h2 class="text-xl font-semibold text-gray-900 mb-2">Description</h2>
+        <div class="mb-6 p-4 bg-white rounded-lg shadow-inner">
+          <h2 class="text-lg font-semibold text-gray-900 mb-2">Description</h2>
           <p class="text-gray-700"><%= @product_idea.description %></p>
         </div>
 
-        <div class="mb-6">
-          <h2 class="text-xl font-semibold text-gray-900 mb-2">Status</h2>
-          <span class="px-2 py-1 text-sm font-semibold rounded-full <%= status_color(@product_idea.status) %>">
-            <%= @product_idea.status %>
-          </span>
-        </div>
-        
-        <div class="mb-6">
-  <h2 class="text-xl font-semibold text-gray-900 mb-2">Generated PRDs</h2>
-  <% if @product_idea.prds.any? %>
-    <ul class="mt-3 space-y-3">
-      <% @product_idea.prds.each do |prd| %>
-        <li class="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
-          <%= link_to "PRD #{prd.id} - #{prd.status&.capitalize || 'N/A'}", product_idea_prd_path(@product_idea, prd), class: "text-indigo-600 hover:text-indigo-900" %>
-          <span class="text-sm text-gray-500"><%= prd.created_at&.strftime("%B %d, %Y") || 'Date not available' %></span>
-        </li>
-      <% end %>
-    </ul>
-  <% else %>
-    <p class="mt-3 text-gray-600">No PRDs generated yet.</p>
-  <% end %>
-</div>
-        
-        <div class="mt-6 flex justify-between items-center">
-          <%= link_to "Generate New PRD", new_product_idea_prd_path(@product_idea), class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
-          <%= link_to "Edit Product Idea", edit_product_idea_path(@product_idea), class: "inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
-        </div>
+        <dl class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2">
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <dt class="text-sm font-medium text-gray-500">Customer ACV</dt>
+            <dd class="mt-1 text-lg font-semibold text-gray-900">$<%= number_with_precision(@product_idea.customer_acv, precision: 2) %></dd>
+          </div>
+          
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <dt class="text-sm font-medium text-gray-500">Customer Impact</dt>
+            <dd class="mt-1 text-lg font-semibold text-gray-900"><%= @product_idea.customer_impact %></dd>
+          </div>
+          
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <dt class="text-sm font-medium text-gray-500">T-Shirt Size Effort</dt>
+            <dd class="mt-1 text-lg font-semibold text-gray-900"><%= @product_idea.tshirt_size_effort %></dd>
+          </div>
+          
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <dt class="text-sm font-medium text-gray-500">Status</dt>
+            <dd class="mt-1">
+              <span class="px-2 py-1 text-sm font-semibold rounded-full <%= status_color(@product_idea.status) %>">
+                <%= @product_idea.status %>
+              </span>
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+    
+    <div class="mt-8 bg-white shadow-lg rounded-lg overflow-hidden">
+      <div class="px-4 py-5 sm:px-6 bg-gradient-to-r from-cyan-600 to-blue-600">
+        <h2 class="text-xl font-semibold text-white">Generated PRDs</h2>
+      </div>
+      
+      <div class="px-4 py-5 sm:p-6">
+        <% if @product_idea.prds.any? %>
+          <ul class="divide-y divide-gray-200">
+            <% @product_idea.prds.each do |prd| %>
+              <li class="py-4">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                      <svg class="h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                      </svg>
+                    </div>
+                    <div class="ml-4">
+                      <h3 class="text-lg font-medium text-gray-900"><%= prd.title.presence || "Untitled PRD" %></h3>
+                      <p class="text-sm text-gray-500"><%= prd.status&.capitalize || 'N/A' %></p>
+                    </div>
+                  </div>
+                  <div>
+                    <%= link_to "View", product_idea_prd_path(@product_idea, prd), class: "inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+                  </div>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p class="text-gray-500 text-center py-4">No PRDs generated yet.</p>
+        <% end %>
       </div>
       
       <div class="px-4 py-4 sm:px-6 bg-gray-50">
-        <%= link_to "Back to Product Ideas", product_ideas_path, class: "text-indigo-600 hover:text-indigo-900" %>
-      </div>
-    </div>
-  </div>
-</div>
+        <%= link_to "Generate New PRD", new_product_idea_prd_path(@product_idea), class:

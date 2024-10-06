@@ -1,3 +1,4 @@
+# app/jobs/generate_prd_job.rb
 class GeneratePrdJob < ApplicationJob
     queue_as :default
   
@@ -23,6 +24,9 @@ class GeneratePrdJob < ApplicationJob
   
         Title: #{product_idea.title}
         Description: #{product_idea.description}
+        Customer ACV: $#{product_idea.customer_acv}
+        Customer Impact: #{product_idea.customer_impact}
+        T-Shirt Size Effort: #{product_idea.tshirt_size_effort.upcase}
   
         The PRD should include the following sections:
         1. Executive Summary
@@ -33,9 +37,10 @@ class GeneratePrdJob < ApplicationJob
         6. Technical Requirements
         7. Timeline and Milestones
         8. Risks and Mitigation Strategies
-        9. Go to Market 
+        9. Success Metrics
   
         Please provide detailed and specific information for each section based on the given product idea.
+        Consider the Customer ACV, Customer Impact, and T-Shirt Size Effort when determining the scope and priority of features.
       PROMPT
   
       response = client.chat(

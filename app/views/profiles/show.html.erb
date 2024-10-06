@@ -1,0 +1,65 @@
+<div class="min-h-screen bg-gradient-to-r from-cyan-500 to-blue-500 py-6 flex flex-col justify-center sm:py-12">
+  <div class="relative py-3 sm:max-w-xl sm:mx-auto w-full">
+    <div class="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
+    <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+      <div class="max-w-md mx-auto">
+        <h1 class="text-2xl font-semibold mb-6 text-center text-gray-900">Your Profile</h1>
+        
+        <div class="mb-6">
+          <h2 class="text-lg font-medium text-gray-900 mb-4">Personal Information</h2>
+          <div class="space-y-3">
+            <div class="bg-gray-50 rounded-lg p-3 shadow-sm">
+              <p class="text-sm text-gray-500">Name</p>
+              <p class="text-md font-medium text-gray-800"><%= @user.name %></p>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-3 shadow-sm">
+              <p class="text-sm text-gray-500">Email</p>
+              <p class="text-md font-medium text-gray-800"><%= @user.email %></p>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-3 shadow-sm">
+              <p class="text-sm text-gray-500">Company</p>
+              <p class="text-md font-medium text-gray-800"><%= @user.company %></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <h2 class="text-lg font-medium text-gray-900 mb-4">Product Domain</h2>
+          <% if @product_domain.persisted? %>
+            <div class="space-y-3">
+              <div class="bg-gray-50 rounded-lg p-3 shadow-sm">
+                <p class="text-sm text-gray-500">Name</p>
+                <p class="text-md font-medium text-gray-800"><%= @product_domain.name %></p>
+              </div>
+              <div class="bg-gray-50 rounded-lg p-3 shadow-sm">
+                <p class="text-sm text-gray-500">Description</p>
+                <p class="text-md font-medium text-gray-800"><%= @product_domain.description %></p>
+              </div>
+            </div>
+          <% else %>
+            <p class="text-gray-600 italic bg-yellow-50 p-3 rounded-lg">No product domain set.</p>
+          <% end %>
+        </div>
+
+        <div class="mb-6">
+          <h2 class="text-lg font-medium text-gray-900 mb-4">Product Documents</h2>
+          <% if @product_documents.any? %>
+            <ul class="space-y-2">
+              <% @product_documents.each do |document| %>
+                <li class="bg-gray-50 rounded-lg p-3 shadow-sm">
+                  <%= link_to document.filename.to_s, rails_blob_path(document, disposition: "attachment"), class: "text-blue-600 hover:text-blue-800 underline" %>
+                </li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p class="text-gray-600 italic bg-yellow-50 p-3 rounded-lg">No documents uploaded.</p>
+          <% end %>
+        </div>
+
+        <div class="flex justify-center">
+          <%= link_to 'Edit Profile', edit_profile_path, class: 'inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 shadow-md transition duration-150 ease-in-out' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
